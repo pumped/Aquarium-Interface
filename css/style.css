@@ -1,0 +1,19 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+ul.schedule {
+	list-style:none;
+}
+
+.inputs {
+	display:none;
+}
+
+#historyGraph {
+	height:500px;
+}

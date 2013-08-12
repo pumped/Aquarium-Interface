@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>MARFU Aquarium Controller</title>
+		<link href="css/bootstrap.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<link href="css/jquery.ptTimeSelect.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/highstock.js"></script>
+		<script type="text/javascript" src="js/jquery.ptTimeSelect.js"></script>
+		<script type="text/javascript" src="js/form.js"></script>
+		<script type="text/javascript" src="js/graphs.js"></script>
+		<script type="text/javascript">
+			var historyChart;
+
+		</script>
+	</head>
+	<body>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">MARFU</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="index.html">Home</a>
+						</li>
+						<li>
+							<a href="history.html">History</a>
+						</li>
+						<li class="active">
+							<a href="settings.html">Settings</a>
+						</li>
+					</ul>
+				</div><!--/.nav-collapse -->
+			</div>
+		</div>
+		<div class="container">
+			<div class="starter-template">
+				<h1>Aquarium Management</h1>
+				<p class="lead">
+					Settings
+				</p>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<form>
+						<fieldset>
+							<legend>
+								Schedule
+							</legend>
+							<div class="form-group">
+								<label for="exampleInputFile">Select Schedule</label>
+								<select class="form-control">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select>
+							</div>
+							<button type="submit" class="btn btn-primary">
+								Save
+							</button>
+						</fieldset>
+					</form>
+					<br/><br/>
+					<form>
+						<fieldset>
+							<legend>
+								Upload Schedule
+							</legend>
+							<div class="form-group">
+								<label for="title">Schedule Name</label>
+								<input type="text" id="title" name="title" />
+							</div>
+							<div class="form-group">
+								<label for="exampleInputFile">Upload Schedule</label>
+								<input type="file" id="exampleInputFile">
+								<p class="help-block">
+									Upload an existing CSV schedule. Note incorrectly formatted schedules may cause unexpected behaviour.
+								</p>
+							</div>
+							<button type="submit" class="btn btn-default">
+								Submit
+							</button>
+						</fieldset>
+					</form>
+					<br/><br/>
+					<form>
+						<fieldset>
+							<legend>
+								Create Schedule
+							</legend>
+							<ul class="schedule">
+								<li>
+									<label for="time">Time</label>
+									<input type="text" name="time" class="schTime" />
+									<label for="pH">pH</label>
+									<input type="text" name="pH" class="schPH" />
+									<hr/>
+								</li>
+							</ul>
+							<div class="addNew">
+								<div class="inputs">
+									<label for="time">Time</label>
+									<input type="text" name="time" class="schTime" />
+									<label for="pH">pH</label>
+									<input type="text" name="pH" class="schPH" />
+									<hr/>
+								</div>
+								<button class="schedAddButton" type="button" class="btn btn-default">
+									Add
+								</button>
+							</div>
+						</fieldset>
+					</form>
+					<br/>
+					<br/>
+				</div>
+				<div class="col-lg-6">
+					
+					<form class="form-horizontal">
+						<legend>
+							Manual Setpoint Control
+						</legend>
+						<div class="form-group">
+							<label for="inputEmail" class="col-lg-2 control-label">Temperature</label>
+							<div class="col-lg-8">
+								<input type="text" class="form-control" id="tempManual" placeholder="Temperature">
+							</div>
+							<div class="col-lg-2">
+								<button type="button" class="btn btn-primary" id="manualSetTemp">
+									Save
+								</button>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword" class="col-lg-2 control-label">pH</label>
+							<div class="col-lg-8">
+								<input type="text" class="form-control" id="phManual" placeholder="pH">
+							</div>
+							<div class="col-lg-2">
+								<button type="button" class="btn btn-primary" id="manualSetPH">
+									Save
+								</button>
+							</div>
+						</div>
+					</form>
+					<form>
+						<fieldset>
+							<legend>
+								Temperature Control Paramaters
+							</legend>
+							<h4>Temperature</h4>
+							<label for="tKp">KP</label>
+							<input type="text" name="tKp" class="schTime" id="tKp" value=""/>
+							<label for="tKi">KI</label>
+							<input type="text" name="tKi" class="schTime" id="tKi" value="" />
+							<label for="tKd">Kd</label>
+							<input type="text" name="tKd" class="schTime" id="tKd" value="" />
+							<button class="add" type="button" class="btn brn-default" id="tempSetPoints">
+								Set
+							</button>
+							<hr/>
+						</fieldset>
+					</form>
+					<form>
+						<h4>pH</h4>
+						<label for="pKp">KP</label>
+						<input type="text" name="pKp" class="schTime" id="pKp" value=""/>
+						<label for="pKi">KI</label>
+						<input type="text" name="pKi" class="schTime" id="pKi" value="" />
+						<label for="pKd">Kd</label>
+						<input type="text" name="pKd" class="schTime" id="pKd" value="" />
+						<button class="add" type="button" class="btn brn-default" id="phSetPoints">
+							Set
+						</button>
+						<hr/>
+					</form>
+					<form>
+						<fieldset>
+							<legend>
+								Notifications
+							</legend>
+							<div class="form-group">
+								<label for="exampleInputEmail">Email address</label>
+								<input type="text" class="form-control" id="exampleInputEmail" placeholder="Enter email">
+							</div>
+							<button type="submit" class="btn btn-default">
+								Submit
+							</button>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div><!-- /.container -->
+	</body>
+</html>
