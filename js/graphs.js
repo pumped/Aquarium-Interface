@@ -47,6 +47,13 @@ function generateData(data) {
 
 function setupGraph() {
 	console.log('setting up graph');
+	
+	Highcharts.setOptions({                                            // This is for all plots, change Date axis to local timezone
+                global : {
+                    useUTC : false
+                }
+            });
+
 
 	historyChart = new Highcharts.StockChart({
 		chart : {
