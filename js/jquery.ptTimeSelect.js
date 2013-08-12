@@ -197,7 +197,7 @@
                         +    '            <div style="clear: left;"></div>'
                         +    '        </div>'
                         +    '        <div id="ptTimeSelectSetButton">'
-                        +    '            <a href="javascript: void(0);" onclick="jQuery.ptTimeSelect.setTime()"'
+                        +    '            <a class="btn btn-default" href="javascript: void(0);" onclick="jQuery.ptTimeSelect.setTime()"'
                         +    '                    onmouseover="jQuery(this).removeClass(\'ui-state-default\').addClass(\'ui-state-hover\');" '
                         +    '                        onmouseout="jQuery(this).removeClass(\'ui-state-hover\').addClass(\'ui-state-default\');"'
                         +    '                        class="ui-corner-all ui-state-default">'

@@ -1,8 +1,8 @@
 $(document).ready(function() {
-	$('.schedAddButton').click(addNew);
-	
-	//setup schedule
-	addNew();
+	$('#schedAddButton').click(addNew);
+		
+	//setup time selector
+	$('input[name="time"]').ptTimeSelect();
 	
 	//setup submit buttons
 	$('#manualSetPH').click(function() {
@@ -22,6 +22,11 @@ $(document).ready(function() {
 		post('temp','Point', temp);
 		
 	});
+	
+	$('#scheduleTable').on('click', '.schedDelete', function(){
+		console.log($(this));
+		$(this).parent().parent().remove();
+	})
 });
 
 function post(sensor, type, value) {
@@ -42,7 +47,68 @@ function post(sensor, type, value) {
 
 }
 
+function getIndex(val) {
+	var i = 0;
+	var t = timeToNumber(val);
+	$('#scheduleTable').find('tbody').children('tr').each(function(){
+		var time = timeToNumber($(this).find('.time').html());
+		console.log(time + " " + t);
+		if (time > t) {
+			console.log(i);
+			return i;
+		}
+		i++;
+	});
+	return i;
+}
+
+function timeToNumber(val) {
+	if (val == undefined)
+		return 0;
+	val = val.replace(":",'');
+	var i = val.split(" ");
+	var t = i[0];
+	if (i[1] == "PM"){
+		t = parseInt(i[0]) + 1200; 
+	}
+	if (i[1] == "AM" && i[0] >= 1200) {
+		t = t - 1200
+		console.log(t);
+	}
+	
+	return t;
+}
+
 function addNew() {
-	point = $(this).parent().children('.inputs');
+	/*point = $(this).parent().children('.inputs');
 	$(this).parent().parent().children('.schedule').append("<li>" + point.html() + "</li>")
+	*/
+	
+	var temp = $('#schTemp').val();
+	var ph = $('#schPH').val();
+	var time = $('#schTime').val();
+	//times = timeToNumber(time);
+	
+	console.log('Test');
+	console.log(temp + " " + ph + " " + time);
+	var index = getIndex(time)-1;
+	console.log(index);
+	
+	$('#scheduleTable').find('tbody tr').eq(index)
+		.after($('<tr>')
+	        .append($('<td>')
+	            .html(time)
+	            .attr('class','time')
+	        )
+	        .append($('<td>')
+	            .html(temp + "&deg;c")
+	        )
+	        .append($('<td>')
+	            .html(ph)
+	        )
+	        .append($('<td>')
+	            .html('<a class="glyphicon glyphicon-remove schedDelete"></a>')
+	        )
+	        
+	    );
 }

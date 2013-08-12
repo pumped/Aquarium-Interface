@@ -17,3 +17,15 @@ ul.schedule {
 #historyGraph {
 	height:500px;
 }
+
+
+#ptTimeSelectCntr {
+	background-color:#fff;
+	border:1px solid #ddd;
+	border-radius:5px;
+}
+
+.ui-widget-header {
+	font-size:18px;
+	font-weight:bold;
+}
