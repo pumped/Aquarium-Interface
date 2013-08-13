@@ -49,12 +49,12 @@ function post(sensor, type, value) {
 
 function getIndex(val) {
 	var i = 0;
-	var t = timeToNumber(val);
+	var current = timeToNumber(val);
 	$('#scheduleTable').find('tbody').children('tr').each(function(){
 		var time = timeToNumber($(this).find('.time').html());
-		console.log(time + " " + t);
-		if (time > t) {
-			console.log(i);
+		console.log(time + " " + current);
+		if (time > current) {
+			console.log("returning: " + i);
 			return i;
 		}
 		i++;
@@ -68,7 +68,7 @@ function timeToNumber(val) {
 	val = val.replace(":",'');
 	var i = val.split(" ");
 	var t = i[0];
-	if (i[1] == "PM"){
+	if (i[1] == "PM" && i[0] < 1200){
 		t = parseInt(i[0]) + 1200; 
 	}
 	if (i[1] == "AM" && i[0] >= 1200) {
@@ -76,7 +76,7 @@ function timeToNumber(val) {
 		console.log(t);
 	}
 	
-	return t;
+	return parseInt(t);
 }
 
 function addNew() {
@@ -92,7 +92,7 @@ function addNew() {
 	console.log('Test');
 	console.log(temp + " " + ph + " " + time);
 	var index = getIndex(time)-1;
-	console.log(index);
+	console.log("Index:" + index);
 	
 	$('#scheduleTable').find('tbody tr').eq(index)
 		.after($('<tr>')
