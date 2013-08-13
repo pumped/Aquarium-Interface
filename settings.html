@@ -146,15 +146,15 @@
 						</div>
 						<div class="form-group">
 							<div class="col-lg-4">
-								<label for="inputEmail" class="col-lg-2 control-label">Time</label>
+								<label for="schTime" class="col-lg-2 control-label">Time</label>
 								<input type="text" name="time" class="form-control" id="schTime" placeholder="Time" val="">
 							</div>
 							<div class="col-lg-4">
-								<label for="inputEmail" class="col-lg-2 control-label">Temperature</label>
+								<label for="schTemp" class="col-lg-2 control-label">Temperature</label>
 								<input type="text" class="form-control" id="schTemp" placeholder="Temperature" val="">
 							</div>
 							<div class="col-lg-4">
-								<label for="inputPassword" class="col-lg-2 control-label">pH</label>
+								<label for="schPH" class="col-lg-2 control-label">pH</label>
 								<input type="text" class="form-control" id="schPH" placeholder="pH" val="">
 							</div>
 						</div>
@@ -209,7 +209,54 @@
 								</button>
 							</div>
 						</div>
-					</form>
+					</form><br/><br/>
+					<form>
+						<fieldset>
+							<legend>
+								Notifications
+							</legend>
+							<div class="form-group">
+								<label for="exampleInputEmail">Email address</label>
+								<input type="text" class="form-control" id="exampleInputEmail" placeholder="Enter email">
+							</div>
+							<button type="submit" class="btn btn-default">
+								Submit
+							</button>
+						</fieldset>
+					</form><br/><br/>
+					<form class="form-horizontal">
+						<fieldset>
+							<legend>Turning Paramaters</legend>
+							<p class="help-block">
+								The turning paramaters control the responsiveness to pH changes.
+								<ul>
+									<li>Kp: Higher values reduce the rise time but also increase overshoot.</li>
+									<li>Ki: Higher values reduce the rise time and help eliminate steady state error. However high values increase settling time.</li>
+									<li>Kd: Higher Values help reduce overshoot and reduce the settling time but can increase rise time.</li>
+								</ul> 
+							</p>
+							<div class="form-group">
+								<div class="col-lg-3">
+									<label for="Kp" class="col-lg-2 control-label">Kp</label>
+									<input type="text" name="time" class="form-control" id="Kp" placeholder="Kp" val="">
+								</div>
+								<div class="col-lg-3">
+									<label for="Ki" class="col-lg-2 control-label">Ki</label>
+									<input type="text" class="form-control" id="Ki" placeholder="Ki" val="">
+								</div>
+								<div class="col-lg-3">
+									<label for="Kd" class="col-lg-2 control-label">Kd</label>
+									<input type="text" class="form-control" id="Kd" placeholder="Kd" val="">
+								</div>
+								<div class="col-lg-3">
+									<label for="turningPoints" class="col-lg-2 control-label">&nbsp;</label>
+									<button type="button" class="btn btn-success form-control" id="turningPoints">
+										Save
+									</button>
+								</div>
+							</div>
+						</fieldset>
+					</form><br/><br/>
 					<!--<form>
 						<fieldset>
 							<legend>
@@ -241,20 +288,6 @@
 						</button>
 						<hr/>
 					</form>-->
-					<form>
-						<fieldset>
-							<legend>
-								Notifications
-							</legend>
-							<div class="form-group">
-								<label for="exampleInputEmail">Email address</label>
-								<input type="text" class="form-control" id="exampleInputEmail" placeholder="Enter email">
-							</div>
-							<button type="submit" class="btn btn-default">
-								Submit
-							</button>
-						</fieldset>
-					</form>
 				</div>
 			</div>
 		</div><!-- /.container -->
