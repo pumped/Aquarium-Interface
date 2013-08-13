@@ -5,24 +5,37 @@ $(document).ready(function() {
 	$('input[name="time"]').ptTimeSelect();
 	
 	//setup submit buttons
+	
+	//manual pH
 	$('#manualSetPH').click(function() {
-		ph = $('#phManual').val();
-		
+		ph = $('#phManual').val();		
 		console.log("Set pH Target: " + ph);
-
-		post('ph','Point', ph);
-		
-	});
-	$('#manualSetTemp').click(function() {
-	
-		temp = $('#tempManual').val();
-		
-		console.log("Set Temp Target: " + temp);
-		
-		post('temp','Point', temp);
-		
+		post('ph','Point', ph);		
 	});
 	
+	//manual Temp
+	$('#manualSetTemp').click(function() {	
+		temp = $('#tempManual').val();		
+		console.log("Set Temp Target: " + temp);		
+		post('temp','Point', temp);		
+	});
+	
+	//turning parameters
+	$('#turningPoints').click(function(){
+		kp = $('#Kp').val();
+		ki = $('#Ki').val();
+		kd = $('#Kd').val();
+		 
+		post('ph','Kp',kp);
+		post('ph','Ki',ki);
+		post('ph','Kd',kd);
+		
+		console.log(ki + " " + kp + " " + kd);
+	});
+	
+	
+	//Schedule
+	//Schedule delete buttons
 	$('#scheduleTable').on('click', '.schedDelete', function(){
 		console.log($(this));
 		$(this).parent().parent().remove();
@@ -38,7 +51,7 @@ function post(sensor, type, value) {
 		contentType : "application/json; charset=utf-8",
 		dataType : "text",
 		success : function(data) {
-			alert(data);
+			console.log(data);
 		},
 		failure : function(errMsg) {
 			alert(errMsg);
