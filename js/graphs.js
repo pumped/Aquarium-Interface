@@ -1,12 +1,14 @@
 $(document).ready(function() {
 	setupGraph();
-	updateGraph();
+	//updateGraph();
+	loadCsv();
 });
 
 
 var historyChart;
 var colors = ['#294EA3', '#536EAD', '#DE6A6A', '#C21919'];
 var d = [];
+
 
 function updateGraph() {
 	$.getJSON('data/every_10.json', function(data) {
@@ -27,7 +29,7 @@ function updateGraph() {
 function loadLiveData() {
 	$.getJSON('data/current.json', function(newData){
 		console.log('live data')
-		console.log(newData);
+		//console.log(newData);
 		var d = generateData(newData);
 		
 		historyChart.series[0].addPoint(d[0][0],false);
@@ -77,14 +79,14 @@ function setupGraph() {
 
 	historyChart = new Highcharts.StockChart({
 		chart : {
-			renderTo : 'historyGraph'
+			renderTo : 'historyGraph',
+			zoomType: 'x'
 		},
 		plotOptions : {
 			line : {
 				animation : false
 			}
 		},
-
 		rangeSelector : {
 			selected : 1,
 			buttons : [{
@@ -125,7 +127,11 @@ function setupGraph() {
 			dateTimeLabelFormats : {// don't display the dummy year
 				month : '%e. %b',
 				year : '%b'
-			}
+			},
+			events : {
+				afterSetExtremes : loadCsv
+			},
+			minRange: 3600 // one minute
 		},
 
 		yAxis : [{
@@ -196,7 +202,68 @@ function setGraphData(graph, id, data, redraw) {
 		redraw = false;
 	}
 	graph.series[id].setData(data, redraw);
-	console.log("Series " + id + " data set");
+	//console.log("Series " + id + " data set");
+}
+
+function lod(e) {
+	console.log(e);
+}
+
+updateLock = false;
+
+function loadCsv(e) {
+	if (updateLock) {
+		return;
+	}
+	updateLock = true;
+	console.log('loading');
+	if (e == undefined) {
+		url = 'data/test.csv';
+	} else {
+		currentExtremes = this.getExtremes(),
+		range = e.max - e.min;
+		url = 'data/test.csv?start=' +  Math.round(e.min) + '&end='+ Math.round(e.max);
+	}
+	
+	historyChart.showLoading('Loading data from server...');
+	categories = [];
+	csvData = {};
+	
+	$.get(url, function(data) {
+		
+		tsID = 0;
+		
+		console.log("loading csv")
+		// Split the lines
+		var lines = data.split('\n');
+		$.each(lines, function(lineNo, line) {
+			var items = line.split(',');
+			
+			// header line containes categories
+			if (lineNo == 0) {
+				$.each(items, function(itemNo, item) {
+					categories.push(item);
+					csvData[categories[itemNo]] = [];
+					name = item.replace("\n",'');
+					tsID = itemNo; //hack
+				});
+			} else {
+				$.each(items, function(itemNo, item) {
+					csvData[categories[itemNo]].push([parseInt(items[tsID]),parseFloat(item)]);
+				});
+			}
+			
+			
+		});
+		
+		setGraphData(historyChart, 0, csvData['PH_ph']);
+		setGraphData(historyChart, 3, csvData['PH_set_point']);
+		setGraphData(historyChart, 2, csvData['Temperature_temp']);
+		setGraphData(historyChart, 1, csvData['Temperature_set_point'], true);
+		historyChart.hideLoading();
+		console.log('loading hidden');
+		updateLock = false;
+	});
 }
 
 /*,{
