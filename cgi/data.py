@@ -1,8 +1,24 @@
+#!/usr/bin/env python
+
 from datetime import datetime, timedelta
 import time
+import cgi
+import cgitb; cgitb.enable()  # for troubleshooting
+
 #10s every 1hr
 #10min every day
 #1hr every week
+
+print "Content-type: text/html"
+print
+
+def cgiFieldStorageToDict( fieldStorage ):
+   """Get a plain dictionary, rather than the '.value' system used by the cgi module."""
+   params = {}
+   for key in fieldStorage.keys():
+      params[ key ] = fieldStorage[ key ].value
+   return params
+
 
 def dataRange(start, end):
     s = datetime.fromtimestamp(int(start))
@@ -20,11 +36,21 @@ def dataRange(start, end):
         dataSet = getWeekData(s, e)
     
     #assemble data  
+    first = True
     for ts in dataSet:
-        name = getFileName(ts)
-        print "required: " + name + ".csv"
-        #f = open(name+'.csv')
+        name = getFileName(ts[1])
+        #print "required: " + name + ".csv"
         
+    	try:
+    		with open('/var/www/data/'+ts[0]+'/'+name+'.csv','r') as f:
+    	        if not first:
+                    next(f)
+                else:
+                    first = False
+    			for line in f:
+    				print line.replace("\n","")
+    	except:
+    		pass
         
 def getFileName(item):
     return str(int(time.mktime(item.timetuple())))+'000'
@@ -46,7 +72,10 @@ def getDayData(start, end):
     
     while iTime <= eTime:
         iTime = iTime + timedelta(days = 1)
-        data.append(iTime)
+	temp = []
+	temp.append('10_min')
+	temp.append(iTime)
+        data.append(temp)
         
     return data
 
@@ -66,9 +95,14 @@ def getHourData(start, end):
     
     while iTime <= eTime:
         iTime = iTime + timedelta(hours = 1)
-        data.append(iTime)
+	temp = []
+	temp.append('10_sec')
+	temp.append(iTime)
+        data.append(temp)
         
     return data
     
-    
-dataRange(1376611853,1376784653)
+f = cgiFieldStorageToDict(cgi.FieldStorage())
+
+dataRange(f['start'],f['end'])
+#dataRange(1376611853,1376784653)
