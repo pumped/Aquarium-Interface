@@ -122,7 +122,7 @@ def getDayData(start, end):
 		temp.append('10_min')
 		temp.append(iTime)
 		data.append(temp)
-        iTime = iTime + timedelta(days=1)
+		iTime = iTime + timedelta(days=1)
 		
 	return data
 
@@ -142,11 +142,12 @@ def getHourData(start, end):
 	iTime = sTime
 	
 	while iTime <= eTime:
+		iTime = iTime + timedelta(hours=1)
 		temp = []
 		temp.append('10_sec')
 		temp.append(iTime)
 		data.append(temp)
-        iTime = iTime + timedelta(hours=1)
+		iTime = iTime + timedelta(hours=1)
 		
 	return data
 	
