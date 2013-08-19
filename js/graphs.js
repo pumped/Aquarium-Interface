@@ -237,7 +237,7 @@ function loadCsv(e) {
 	} else {
 		currentExtremes = this.getExtremes(),
 		range = e.max - e.min;
-		url = 'cgi-bin/data.py?start=' +  Math.round(e.min) + '&end='+ Math.round(e.max);
+		url = 'cgi-bin/data.py?start=' +  Math.round(e.min/1000) + '&end='+ Math.round(e.max/1000);
 	}
 	
 	historyChart.showLoading('Loading data from server...');
