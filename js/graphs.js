@@ -8,7 +8,19 @@ $(document).ready(function() {
 var historyChart;
 var colors = ['#294EA3', '#536EAD', '#DE6A6A', '#C21919'];
 var d = [];
+var extremities = [];
+var latestPoint = [];
 
+function setExtreme(val,v) {
+	val = parseInt(val);
+	if (val < extremities[0]) {
+		extremities[0] = [val,v];
+	} else if (val > extremities[1]) {
+		extremities[1] = [val,v];
+	}
+	
+	return extremities;
+}
 
 function updateGraph() {
 	$.getJSON('data/every_10.json', function(data) {
@@ -31,12 +43,15 @@ function loadLiveData() {
 		console.log('live data')
 		//console.log(newData);
 		var d = generateData(newData);
+		latestPoint = d;
 		
+		updateLock = true;		
 		historyChart.series[0].addPoint(d[0][0],false);
 		historyChart.series[3].addPoint(d[1][0],false);
 		historyChart.series[1].addPoint(d[2][0],false);
 		historyChart.series[2].addPoint(d[3][0],true);
 		
+		updateLock = false;
 		setTimeout(loadLiveData, 10000);
 	});
 }
@@ -218,11 +233,11 @@ function loadCsv(e) {
 	updateLock = true;
 	console.log('loading');
 	if (e == undefined) {
-		url = 'data/test.csv';
+		url = 'cgi-bin/data.py?start=1&end=1200000';
 	} else {
 		currentExtremes = this.getExtremes(),
 		range = e.max - e.min;
-		url = 'data/test.csv?start=' +  Math.round(e.min) + '&end='+ Math.round(e.max);
+		url = 'cgi-bin/data.py?start=' +  Math.round(e.min) + '&end='+ Math.round(e.max);
 	}
 	
 	historyChart.showLoading('Loading data from server...');
@@ -247,7 +262,14 @@ function loadCsv(e) {
 					name = item.replace("\n",'');
 					tsID = itemNo; //hack
 				});
-			} else {
+			} /*else if (lineNo == 1) {
+				//set minimum extreme
+				ts = items[tsID];
+				setExtreme(parseInt(ts),parseFloat(line));
+				if (ts > extremities[0][0]) {
+					csvData[categories[itemNo]].push(extremities[0]);
+				}
+			}*/ else {
 				$.each(items, function(itemNo, item) {
 					csvData[categories[itemNo]].push([parseInt(items[tsID]),parseFloat(item)]);
 				});
