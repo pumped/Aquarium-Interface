@@ -143,6 +143,7 @@ function setupGraph() {
 				month : '%e. %b',
 				year : '%b'
 			},
+			ordinal: false,
 			events : {
 				afterSetExtremes : loadCsv
 			},

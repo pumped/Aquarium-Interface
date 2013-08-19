@@ -61,30 +61,31 @@ def dataRange(start, end):
 		print l
 	
 def merge(base):
-	lowest,highest = getLimit().replace("\n",'')
-    if (lowest != base[1]):
-	   base.insert(1,lowest)
-    base.append(highest)
+	lowest,highest = getLimit()
+	if (lowest != base[1]):
+		base.insert(1,lowest)
+	if (highest != base[-1]):
+		base.append(highest)
 	return base
 
 def getLimit():
 	files = getAll()
-    filee = getAll('10_sec')
+	filee = getAll('10_sec')
 	
 	#get first reading
 	f = open('/var/www/data/hour/' + getFileName(files[0][1]) + '.csv','r')
 	f.readline()
 	first = f.readline()
 	f.close()
-    
-    #get last
-    with open('/var/www/data/10_sec' + getFilename(files[-1][1]) + '.csv','r') as f:
-        f.seek (0, 2)           # Seek @ EOF
-        fsize = f.tell()        # Get Size
-        f.seek (max (fsize-1024, 0), 0) # Set pos @ last n chars
-        lines = f.readlines()       # Read to end
-    last = lines[-1]
-	return [first,last]
+	
+	#get last
+	with open('/var/www/data/10_sec/' + getFileName(filee[-1][1]) + '.csv','r') as f:
+		f.seek (0, 2)		   # Seek @ EOF
+		fsize = f.tell()		# Get Size
+		f.seek (max (fsize-1024, 0), 0) # Set pos @ last n chars
+		lines = f.readlines()	   # Read to end
+	last = lines[-1]
+	return [first.replace("\n",''),last.replace("\n",'')]
 		
 def getFileName(item):
 	return str(int(time.mktime(item.timetuple()))) + '000'
@@ -117,11 +118,11 @@ def getDayData(start, end):
 	iTime = sTime
 	
 	while iTime <= eTime:
-		iTime = iTime + timedelta(days=1)
 		temp = []
 		temp.append('10_min')
 		temp.append(iTime)
 		data.append(temp)
+        iTime = iTime + timedelta(days=1)
 		
 	return data
 
@@ -141,11 +142,11 @@ def getHourData(start, end):
 	iTime = sTime
 	
 	while iTime <= eTime:
-		iTime = iTime + timedelta(hours=1)
 		temp = []
 		temp.append('10_sec')
 		temp.append(iTime)
 		data.append(temp)
+        iTime = iTime + timedelta(hours=1)
 		
 	return data
 	
