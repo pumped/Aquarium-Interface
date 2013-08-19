@@ -8,6 +8,7 @@ $(document).ready(function() {
 	
 	//manual pH
 	$('#manualSetPH').click(function() {
+		console.log("click");
 		ph = $('#phManual').val();		
 		console.log("Set pH Target: " + ph);
 		post('ph','Point', ph);		
