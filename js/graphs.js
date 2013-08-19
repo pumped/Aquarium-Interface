@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	setupGraph();
 	//updateGraph();
+	setTimeout(loadLiveData,10000);
 	loadCsv();
 });
 
@@ -33,7 +34,7 @@ function updateGraph() {
 		setGraphData(historyChart, 2, d[3], true);
 
 		console.log("Finished updating graph")
-		setTimeout(loadLiveData,1000);
+		
 	});
 	//generateData(data);
 }
@@ -41,7 +42,7 @@ function updateGraph() {
 function loadLiveData() {
 	$.getJSON('data/current.json', function(newData){
 		console.log('live data')
-		//console.log(newData);
+		console.log(newData);
 		var d = generateData(newData);
 		latestPoint = d;
 		
@@ -70,10 +71,10 @@ function generateData(data) {
 	for(point in data) {
 		d = data[point]
 		ts = d.ts;
-		phLine[i] = [parseInt(ts), parseFloat(d.PH.ph)];
-		tempLine[i] = [parseInt(ts), parseFloat(d.Temperature.temp)];
-		phSet[i] = [parseInt(ts), parseFloat(d.PH.set_point)];
-		tempSet[i] = [parseInt(ts), parseFloat(d.Temperature.set_point)];
+		phLine[i] = [parseInt(ts), parseFloat(d.PH_ph)];
+		tempLine[i] = [parseInt(ts), parseFloat(d.Temperature_temp)];
+		phSet[i] = [parseInt(ts), parseFloat(d.PH_set_point)];
+		tempSet[i] = [parseInt(ts), parseFloat(d.Temperature_set_point)];
 		i++;
 	}
 
@@ -192,7 +193,8 @@ function setupGraph() {
 			data : [1, 1, 1],
 			tooltip : {
 				valueDecimals : 1
-			}
+			},
+			visible: false
 		}, {
 			name : 'Temperature',
 			color : colors[3],
@@ -219,10 +221,6 @@ function setGraphData(graph, id, data, redraw) {
 	}
 	graph.series[id].setData(data, redraw);
 	//console.log("Series " + id + " data set");
-}
-
-function lod(e) {
-	console.log(e);
 }
 
 updateLock = false;
