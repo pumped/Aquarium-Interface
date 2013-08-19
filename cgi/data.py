@@ -61,34 +61,44 @@ def dataRange(start, end):
 		print l
 	
 def merge(base):
-	lowest = getLimit().replace("\n",'')
+	lowest,highest = getLimit().replace("\n",'')
     if (lowest != base[1]):
 	   base.insert(1,lowest)
+    base.append(highest)
 	return base
 
 def getLimit():
 	files = getAll()
+    filee = getAll('10_sec')
 	
 	#get first reading
 	f = open('/var/www/data/hour/' + getFileName(files[0][1]) + '.csv','r')
 	f.readline()
 	first = f.readline()
 	f.close()
-	return first
+    
+    #get last
+    with open('/var/www/data/10_sec' + getFilename(files[-1][1]) + '.csv','r') as f:
+        f.seek (0, 2)           # Seek @ EOF
+        fsize = f.tell()        # Get Size
+        f.seek (max (fsize-1024, 0), 0) # Set pos @ last n chars
+        lines = f.readlines()       # Read to end
+    last = lines[-1]
+	return [first,last]
 		
 def getFileName(item):
 	return str(int(time.mktime(item.timetuple()))) + '000'
 
-def getAll():
+def getAll(folder="hour"):
 	#scan week folder and stream output
-	mypath = '/var/www/data/hour/'
+	mypath = '/var/www/data/'+folder+'/'
 	onlyfiles = [ f for f in listdir(mypath) if isfile(join(mypath,f)) ]
 	onlyfiles = sorted(onlyfiles)
 	
 	data = []
 	for f in onlyfiles:
 		temp = []
-		temp.append('hour')
+		temp.append(folder)
 		name = datetime.fromtimestamp(int(f.split('.csv')[0])/1000)
 		temp.append(name)
 		data.append(temp)
