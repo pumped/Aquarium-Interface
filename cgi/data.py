@@ -4,6 +4,9 @@ from datetime import datetime, timedelta
 import time
 import cgi
 import cgitb; cgitb.enable()  # for troubleshooting
+from os import listdir
+from os.path import isfile, join
+
 
 #10s every 1hr
 #10min every day
@@ -33,9 +36,10 @@ def dataRange(start, end):
 	elif range <= 48: #use 10m data
 		dataSet = getDayData(s, e)
 	else:   #use 1hr data
-		dataSet = getWeekData(s, e)
+		dataSet = getAll()
 	
-	#assemble data  
+	#assemble data
+	output = []  
 	first = True
 	for ts in dataSet:
 		name = getFileName(ts[1])
@@ -48,16 +52,48 @@ def dataRange(start, end):
 				else:
 					first = False
 				for line in f:
-					print line.replace("\n", "")
+					output.append(line.replace("\n", ""))
 		except:
 			pass
+
+	output = merge(output)
+	for l in output:
+		print l
+	
+def merge(base):
+	lowest = getLimit().replace("\n",'')
+    if (lowest != base[1]):
+	   base.insert(1,lowest)
+	return base
+
+def getLimit():
+	files = getAll()
+	
+	#get first reading
+	f = open('/var/www/data/hour/' + getFileName(files[0][1]) + '.csv','r')
+	f.readline()
+	first = f.readline()
+	f.close()
+	return first
 		
 def getFileName(item):
 	return str(int(time.mktime(item.timetuple()))) + '000'
 
 def getAll():
 	#scan week folder and stream output
-	pass
+	mypath = '/var/www/data/hour/'
+	onlyfiles = [ f for f in listdir(mypath) if isfile(join(mypath,f)) ]
+	onlyfiles = sorted(onlyfiles)
+	
+	data = []
+	for f in onlyfiles:
+		temp = []
+		temp.append('hour')
+		name = datetime.fromtimestamp(int(f.split('.csv')[0])/1000)
+		temp.append(name)
+		data.append(temp)
+		
+	return data
 
 def getDayData(start, end):
 	data = []
@@ -72,15 +108,16 @@ def getDayData(start, end):
 	
 	while iTime <= eTime:
 		iTime = iTime + timedelta(days=1)
-    	temp = []
-    	temp.append('10_min')
-    	temp.append(iTime)
-    	data.append(temp)
+		temp = []
+		temp.append('10_min')
+		temp.append(iTime)
+		data.append(temp)
 		
 	return data
 
 def getWeekData(start, end):
 	pass
+
 
 def getHourData(start, end):
 	data = []
@@ -95,9 +132,9 @@ def getHourData(start, end):
 	
 	while iTime <= eTime:
 		iTime = iTime + timedelta(hours=1)
-	    temp = []
-        temp.append('10_sec')
-	    temp.append(iTime)
+		temp = []
+		temp.append('10_sec')
+		temp.append(iTime)
 		data.append(temp)
 		
 	return data
