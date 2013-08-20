@@ -60,3 +60,4 @@ def setEmail(email, add=True):
 
 cfg = Settings()
 listSchedules()
+cfg.save()
