@@ -15,8 +15,7 @@ def schedule():
         closest = 0
         closestTime = 0
         d = datetime.now()
-        time = d.strftime('%H%M')
-        print time
+        time = int(d.strftime('%H%M'))
 
         for i,element in enumerate(schedule):
                 stime = int(element.split(',')[0])
