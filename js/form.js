@@ -44,7 +44,7 @@ $(document).ready(function() {
 	
 	
 	//get defaults
-	$.get('cgi/test.txt',function(d){
+	$.get('cgi-bin/params.py?type=settings',function(d){
 		console.log(d);
 		
 		cats = d.split('\r\n')
