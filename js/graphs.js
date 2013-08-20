@@ -46,13 +46,18 @@ function loadLiveData() {
 		var d = generateData(newData);
 		latestPoint = d;
 		
-		updateLock = true;		
+		if (updateLock){
+			setTimeout(loadLiveData, 1000);
+			console.log('updating live locked');
+			return;
+		}
+		updateLock++;		
 		historyChart.series[0].addPoint(d[0][0],false);
 		historyChart.series[3].addPoint(d[1][0],false);
 		historyChart.series[1].addPoint(d[2][0],false);
-		historyChart.series[2].addPoint(d[3][0],true);
+		historyChart.series[2].addPoint(d[3][0],true);		
+		updateLock--;
 		
-		updateLock = false;
 		setTimeout(loadLiveData, 10000);
 	});
 }
@@ -223,13 +228,13 @@ function setGraphData(graph, id, data, redraw) {
 	//console.log("Series " + id + " data set");
 }
 
-updateLock = false;
+updateLock = 0;
 
 function loadCsv(e) {
 	if (updateLock) {
 		return;
 	}
-	updateLock = true;
+	
 	console.log('loading');
 	if (e == undefined) {
 		url = 'cgi-bin/data.py?start=1&end=1200000';
@@ -276,14 +281,14 @@ function loadCsv(e) {
 			
 			
 		});
-		
+		updateLock++;
 		setGraphData(historyChart, 0, csvData['PH_ph']);
 		setGraphData(historyChart, 3, csvData['PH_set_point']);
 		setGraphData(historyChart, 2, csvData['Temperature_temp']);
 		setGraphData(historyChart, 1, csvData['Temperature_set_point'], true);
 		historyChart.hideLoading();
 		console.log('loading hidden');
-		updateLock = false;
+		updateLock--;
 	});
 }
 
