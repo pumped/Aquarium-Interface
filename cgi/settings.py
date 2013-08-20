@@ -41,10 +41,3 @@ class Settings:
 
     def deleteSchedule(self,name):
         self.config.remove_option('Schedule',name)
-
-
-cfg = Settings()
-cfg.addEmail('dylanmathiesen@gmail.com')
-cfg.setSchedule(None)
-
-cfg.save()
