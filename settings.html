@@ -25,14 +25,11 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/">MARFU</a>
+				<a class="navbar-brand">MARFU</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav navbar-nav">
 						<li>
 							<a href="index.html">Home</a>
-						</li>
-						<li>
-							<a href="history.html">History</a>
 						</li>
 						<li class="active">
 							<a href="settings.html">Settings</a>
@@ -64,6 +61,10 @@
 							<button id="setSched" type="button" class="btn btn-success">
 								Save
 							</button>
+							<button type="button" class="btn btn-danger" id="deleteSched">
+								Delete
+							</button>
+							
 						</fieldset>
 					</form>
 					<br/>
@@ -179,6 +180,9 @@
 						<legend>
 							Manual Setpoint Control
 						</legend>
+						<p class="help-block">
+							Note: If a schedule is enabled, this will be overwritten in one minute.
+						</p>
 						<div class="form-group">
 							<label for="tempManual" class="col-lg-2 control-label">Temperature</label>
 							<div class="col-lg-8">
@@ -212,8 +216,11 @@
 								<input type="text" class="form-control" id="inputEmail" name="inputEmail" placeholder="Email Address">
 								<input type="hidden" name="type" value="notification"/>
 							</div>
-							<button type="submit" class="btn btn-default">
-								Submit
+							<button type="submit" class="btn btn-primary">
+								Add
+							</button>
+							<button type="button" class="btn btn-danger">
+								Delete
 							</button>
 						</fieldset>
 					</form><br/><br/>
