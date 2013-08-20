@@ -142,7 +142,6 @@ def getHourData(start, end):
 	iTime = sTime
 	
 	while iTime <= eTime:
-		iTime = iTime + timedelta(hours=1)
 		temp = []
 		temp.append('10_sec')
 		temp.append(iTime)
