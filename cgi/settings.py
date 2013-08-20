@@ -27,6 +27,9 @@ class Settings:
         return self.config.items('Email')
 
 
+    def setScheduleByName(self,name):
+        path = self.config.get('Schedules',name)
+        self.setSchedule(name, path)        
 
     def setSchedule(self,name,schedule):
         self.config.set('Schedule','current',schedule)

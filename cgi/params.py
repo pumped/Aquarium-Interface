@@ -35,6 +35,8 @@ def listSchedules():
         addSchedule(formDict['name'], formDict['schedule'])
     elif (type == 'settings'):
         settingsFile()
+    elif (type == 'setSched'):
+        setSchedule(formDict['name'])
     else:
         print 'unknown type'
 
@@ -64,6 +66,8 @@ def addSchedule(name, schedule):
         cfg.addSchedule(name, schedule)
         schedule.close()
 
+def setSchedule(name):
+    cfg.setScheduleByName(name)
 
 def setEmail(email, add=True):
     if add:

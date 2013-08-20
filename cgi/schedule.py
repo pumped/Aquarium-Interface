@@ -28,8 +28,8 @@ def schedule():
 
 
 
-entry = schedule()
 cfg = Settings()
+entry = schedule()
 
 pH = entry.split(',')[2]
 print "Set pH to:" + pH
