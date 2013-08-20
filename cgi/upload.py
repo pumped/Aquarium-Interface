@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import cgi, os
 import cgitb; cgitb.enable()
