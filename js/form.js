@@ -40,8 +40,54 @@ $(document).ready(function() {
 	$('#scheduleTable').on('click', '.schedDelete', function(){
 		console.log($(this));
 		$(this).parent().parent().remove();
-	})
+	});
+	
+	
+	//get defaults
+	$.get('cgi/test.txt',function(d){
+		console.log(d);
+		
+		cats = d.split('\r\n')
+		settings = {};
+		
+		//emails
+		for (i in cats) {
+			cats[i] = cats[i].split(':')[1];
+		}
+		settings['emails'] = cats[0].split(',');
+		
+		//schedules
+		temp = {};
+		schedules = cats[1].split(',')
+		for (i in schedules) {
+			temp[i] = schedules[i].split('|')[1];
+		}	
+		settings['schedules'] = temp;
+		
+		//schedule
+		settings['schedule'] = cats[2].split(',')[0]	
+		setDefaults(settings);	
+		console.log(settings);
+	});
+	
+	$('#setSched').click(function(){
+		
+	});
 });
+
+function setDefaults(settings) {
+	s = settings['schedules'];
+	for (i in s) {
+		console.log(s[i] + ':' + settings['schedule']);
+		if (s[i] == settings['schedule']) {
+			selected = 'selected';
+			console.log('selected');
+		} else {
+			selected = '';
+		}
+		$('#scheduleSelect').append('<option '+selected+' val="'+s[i]+'">'+s[i]+'</option>');
+	}	
+}
 
 function post(sensor, type, value) {
 	$.ajax({

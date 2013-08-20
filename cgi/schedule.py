@@ -1,11 +1,15 @@
+from settings import Settings
+
 def schedule():
+	
+	#get schedule
+	name,path = cfg.getSchedule()
+	
 	#load schedule
-	f = open('schedule.txt', 'r')
+	f = open(path, 'r')
 	schedule = f.readlines()	
 
 	#determine value
-	
-	#while 1:
 	closest = 0
 	closestTime = 0
 	time = 750
@@ -25,6 +29,7 @@ def schedule():
 
 
 entry = schedule()
+cfg = Settings()
 
 pH = entry.split(',')[2]
 print "Set pH to:" + pH
