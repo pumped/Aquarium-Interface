@@ -18,19 +18,14 @@ def test():
     print 'Running'
 
 def listSchedules():
-    print 'sched'
     form = cgi.FieldStorage()
     formDict = cgiFieldStorageToDict(form)    
-
-    print formDict
-    print "<br/>"
 
     if ('type' not in formDict):
         print 'Invalid form'
         return 0
     
     type = formDict['type']
-    print formDict['type'] + "<br/>"
     
     if (type == 'notification'):
         setEmail(formDict['inputEmail'], True);
@@ -44,11 +39,19 @@ def listSchedules():
         print 'unknown type'
 
 def settingsFile():
-    emails = ",".join(cfg.getEmails())
+    temp = []
+    for key,val in cfg.getEmails():
+        temp.append(val)
+    email = ",".join(temp)
     print 'Email:' + email
-    schedules = ",".join(cfg.getScheules())
+    
+    temp = []
+    for key,val in cfg.getSchedules():
+        temp.append(val+'|'+key)
+    schedules = ",".join(temp)
     print 'Schedules:' + schedules
-    schedule = getSchedule()
+    
+    schedule = cfg.getSchedule()
     print 'Schedule:' + schedule[0] + ',' + schedule[1]
 
 def addSchedule(name, schedule):
