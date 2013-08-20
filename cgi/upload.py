@@ -2,6 +2,7 @@
 
 import cgi, os
 import cgitb; cgitb.enable()
+from settings import Settings
 
 def cgiFieldStorageToDict(fieldStorage):
    """Get a plain dictionary, rather than the '.value' system used by the cgi module."""
@@ -9,7 +10,7 @@ def cgiFieldStorageToDict(fieldStorage):
    for key in fieldStorage.keys():
       params[ key ] = fieldStorage[ key ].value
    return params
-
+cfg = Settings()
 form = cgi.FieldStorage()
 f = cgiFieldStorageToDict(form)
 
@@ -22,8 +23,10 @@ if fileitem.filename:
     # strip leading path from file name to avoid 
     # directory traversal attacks
     fn = os.path.basename(fileitem.filename)
-    open('/var/www/schedule/' + fname + '.csv', 'wb').write(fileitem.file.read())
-    
+    path = '/var/www/schedule/' + fname + '.csv'
+    open(path, 'wb').write(fileitem.file.read())
+    cfg.addSchedule(fname,path)
+    cfg.save()
     message = 'The file "' + fn + '" was uploaded successfully.'
    
 else:
