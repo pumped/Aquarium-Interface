@@ -6,7 +6,10 @@ def schedule():
 
         #get schedule
         name,path = cfg.getSchedule()
-
+		
+		if name = None:
+			return None
+		
         #load schedule
         f = open(path, 'r')
         schedule = f.readlines()
@@ -33,13 +36,14 @@ def schedule():
 cfg = Settings()
 entry = schedule()
 
-pH = entry.split(',')[2]
-if pH:
-        params = str(pH)
-        headers = {"Content-type": "application/x-www-form-urlencoded","Accept": "text/plain"}
-        conn = httplib.HTTPConnection("localhost",80)
-        conn.request("POST", "/aquarium/ph/set/Point", params, headers)
-        res = conn.getresponse()
-        print res.status, res.reason
-
-        print "Set pH to:" + pH
+if entry:
+	pH = entry.split(',')[2]
+	if pH:
+	        params = str(pH)
+	        headers = {"Content-type": "application/x-www-form-urlencoded","Accept": "text/plain"}
+	        conn = httplib.HTTPConnection("localhost",80)
+	        conn.request("POST", "/aquarium/ph/set/Point", params, headers)
+	        res = conn.getresponse()
+	        print res.status, res.reason
+	
+	        print "Set pH to:" + pH
