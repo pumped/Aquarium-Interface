@@ -44,10 +44,10 @@ $(document).ready(function() {
 	
 	
 	//get defaults
-	$.get('cgi-bin/params.py?type=settings',function(d){
+	$.get('cgi/test.txt',function(d){
 		console.log(d);
 		
-		cats = d.split('\r\n')
+		cats = d.split('\n')
 		settings = {};
 		
 		//emails
