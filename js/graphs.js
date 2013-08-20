@@ -112,6 +112,10 @@ function setupGraph() {
 			selected : 1,
 			buttons : [{
 				type : 'minute',
+				count : 60,
+				text : '1h'
+			}, {
+				type : 'minute',
 				count : 720,
 				text : '12h'
 			}, {
