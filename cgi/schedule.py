@@ -1,4 +1,5 @@
 from settings import Settings
+import httplib,urllib
 
 def schedule():
 	
@@ -27,9 +28,16 @@ def schedule():
 	return schedule[closest]
 
 
-
 cfg = Settings()
 entry = schedule()
 
 pH = entry.split(',')[2]
-print "Set pH to:" + pH
+if pH:	
+	params = str(pH)
+	headers = {"Content-type": "application/x-www-form-urlencoded","Accept": "text/plain"}
+	conn = httplib.HTTPConnection("localhost",80)
+	conn.request("POST", "/aquarium/ph/set/Point", params, headers)
+	res = conn.getresponse()
+	print res.status, res.reason
+	
+	print "Set pH to:" + pH
