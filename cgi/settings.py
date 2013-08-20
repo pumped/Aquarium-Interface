@@ -28,11 +28,14 @@ class Settings:
 
 
 
-    def setSchedule(self,schedule):
+    def setSchedule(self,name,schedule):
         self.config.set('Schedule','current',schedule)
+        self.config.set('Schedule','name',name)
 
     def getSchedule(self):
-        return self.config.get('Schedule','current')
+        current = self.config.get('Schedule','current')
+        name = self.config.get('Schedule','name')
+        return [name,current]
 
 
 
@@ -40,4 +43,7 @@ class Settings:
         self.config.set('Schedules',name,schedule)
 
     def deleteSchedule(self,name):
-        self.config.remove_option('Schedule',name)
+        self.config.remove_option('Schedules',name)
+        
+    def getSchedules(self):
+        return self.config.items('Schedules')

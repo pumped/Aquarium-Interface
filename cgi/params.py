@@ -38,8 +38,18 @@ def listSchedules():
 		pass
 	elif (type == 'schedule'):
 		addSchedule(formDict['name'],formDict['schedule'])
+    elif (type == 'settings'):
+        settingsFile()
 	else:
 		print 'unknown type'
+
+def settingsFile():
+    emails = ",".join(cfg.getEmails())
+    print 'Email:' + email
+    schedules = ",".join(cfg.getScheules())
+    print 'Schedules:' + schedules
+    schedule = getSchedule()
+    print 'Schedule:' + schedule[0] + ',' + schedule[1]
 
 def addSchedule(name, schedule):
 	if (schedule == ''):
@@ -48,6 +58,7 @@ def addSchedule(name, schedule):
 	else:
 		schedule = open('schedules/'+name+'.csv', 'w')
 		schedule.write(schedule)
+        cfg.addSchedule(name,schedule)
 		schedule.close()
 
 
