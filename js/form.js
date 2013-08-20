@@ -44,10 +44,10 @@ $(document).ready(function() {
 	
 	
 	//get defaults
-	$.get('cgi/test.txt',function(d){
+	$.get('cgi-bin/params.py?type=settings',function(d){
 		console.log(d);
 		
-		cats = d.split('\r\n')
+		cats = d.split('\n')
 		settings = {};
 		
 		//emails
@@ -71,9 +71,9 @@ $(document).ready(function() {
 	});
 	
 	$('#setSched').click(function(){
-		val = '';
-		$.get('cgi-bin/params.py?type=setSched&name='+val,function(){
-			
+		val = $('#scheduleSelect').val();
+		$.get('cgi-bin/params.py?type=setSched&name='+val,function(d){
+			console.log(d);
 		});
 	});
 });
