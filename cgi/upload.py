@@ -38,6 +38,9 @@ else:
 print """\
 Content-Type: text/html\n
 <html>
+<head>
+<meta http-equiv='refresh' content='5; url=/settings.html'>
+</head>
 <body>
    <p>%s</p>
 </body>
