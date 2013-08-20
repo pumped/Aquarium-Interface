@@ -44,7 +44,7 @@ $(document).ready(function() {
 	
 	
 	//get defaults
-	$.get('cgi-bin/params.py?type=settings',function(d){
+	$.get('cgi/test.txt',function(d){
 		console.log(d);
 		
 		cats = d.split('\n')
@@ -68,6 +68,11 @@ $(document).ready(function() {
 		settings['schedule'] = cats[2].split(',')[0]	
 		setDefaults(settings);	
 		console.log(settings);
+		
+		//emails
+		for (i in settings['emails']) {
+			$('#emailNotifications').append('<li>'+settings['emails'][i]+'</li>');
+		}
 	});
 	
 	$('#setSched').click(function(){
