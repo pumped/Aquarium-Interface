@@ -2,6 +2,7 @@
 
 import cgi
 import cgitb; cgitb.enable()  # for troubleshooting
+from settings import Settings
 
 print "Content-type: text/html"
 print
@@ -52,20 +53,10 @@ def addSchedule(name, schedule):
 
 def setEmail(email, add=True):
 	if add:
-		logfile = open('email.txt', 'r')
-		loglist = logfile.readlines()
-		logfile.close()
-		found = False
-		for line in loglist:
-		    if str(email) in line:
-        		found = True
-
-		if not found:
-		    logfile = open('email.txt', 'a')
-		    logfile.write(email+"\n")
-		    logfile.close()
+		cfg.addEmail(email)
+	else:
+		cfg.deleteEmail(email)
 
 
-
-test()
+cfg = Settings()
 listSchedules()
