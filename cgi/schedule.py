@@ -20,7 +20,7 @@ def schedule():
         for i,element in enumerate(schedule):
                 stime = int(element.split(',')[0])
                 #print element
-                if (time > stime and stime > closestTime):
+                if (time >= stime and stime > closestTime):
                         #print i
                         closestTime = stime
                         closest = i
