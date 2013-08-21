@@ -82,3 +82,5 @@ def setEmail(email, add=True):
 cfg = Settings()
 listSchedules()
 cfg.save()
+
+print "<meta http-equiv='refresh' content='0; url=/settings.html'>"
