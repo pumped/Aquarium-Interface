@@ -88,13 +88,13 @@ $(document).ready(function() {
 	});
 	
 	$.getJSON('data/current.json', function(d){
-		temp = d[0].PHPID;
-		$('#Ki').val(parseFloat(temp.Ki));
-		$('#Kp').val(parseFloat(temp.Kp));
-		$('#Kd').val(parseFloat(temp.Kd));
+		temp = d[0];
+		$('#Ki').val(parseFloat(d[0].PHPID_Ki));
+		$('#Kp').val(parseFloat(d[0].PHPID_Kp));
+		$('#Kd').val(parseFloat(d[0].PHPID_Kd));
 		
-		$('#tempManual').val(parseFloat(d[0].Temperature.set_point));
-		$('#phManual').val(parseFloat(d[0].PH.set_point));
+		$('#tempManual').val(parseFloat(d[0].Temperature_set_point));
+		$('#phManual').val(parseFloat(d[0].PH_set_point));
 	});
 	
 	$('#setSched').click(function(){
