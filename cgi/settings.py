@@ -28,8 +28,11 @@ class Settings:
 
 
     def setScheduleByName(self,name):
-        path = self.config.get('Schedules',name)
-        self.setSchedule(name, path)        
+        if (name == None or name == 'None'):
+            self.setSchedule(None, None)
+        else:
+            path = self.config.get('Schedules',name)
+            self.setSchedule(name, path)        
 
     def setSchedule(self,name,schedule):
         self.config.set('Schedule','current',schedule)
