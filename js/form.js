@@ -56,7 +56,7 @@ $(document).ready(function() {
 	
 	
 	//get defaults  cgi-bin/params.py?type=settings
-	$.get('cgi/test.txt',function(d){
+	$.get('cgi-bin/params.py?type=settings',function(d){
 		console.log(d);
 		
 		cats = d.split('\n')
