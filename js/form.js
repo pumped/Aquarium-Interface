@@ -56,7 +56,7 @@ $(document).ready(function() {
 	
 	
 	//get defaults  cgi-bin/params.py?type=settings
-	$.get('cgi/test.txt',function(d){
+	$.get('cgi-bin/params.py?type=settings',function(d){
 		console.log(d);
 		
 		cats = d.split('\n')
@@ -130,7 +130,7 @@ $(document).ready(function() {
 	$('#setSched').click(function(){
 		val = $('#scheduleSelect').val();
 		//cgi-bin/params.py?type=setSched&name='+val
-		$.get('/?type=setSched&name='+val,function(d){
+		$.get('cgi-bin/params.py?type=setSched&name='+val,function(d){
 			$('#setSchedule .notification').append('<div class="alert alert-success"><strong>New Schedule</strong> has successfully been started</div>');
 			var schedAlert = $(this);
 			$('.alert').fadeTo(5000,0,function(){
