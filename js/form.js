@@ -56,7 +56,7 @@ $(document).ready(function() {
 	
 	
 	//get defaults  cgi-bin/params.py?type=settings
-	$.get('cgi-bin/params.py?type=settings',function(d){
+	$.get('cgi/test.txt',function(d){
 		console.log(d);
 		
 		cats = d.split('\n')
@@ -71,13 +71,19 @@ $(document).ready(function() {
 		//schedules
 		temp = {};
 		schedules = cats[1].split(',')
+		scheduleNames = []
 		for (i in schedules) {
-			temp[i] = schedules[i].split('|')[1];
+			var items = schedules[i].split('|');
+			temp[i] = items[1];
+			var paths = items[0].split('/');
+			console.log(paths)
+			scheduleNames[i] = paths[paths.length-1];
 		}	
 		settings['schedules'] = temp;
+		settings['scheduleNames'] = scheduleNames;
 		
 		//schedule
-		settings['schedule'] = cats[2].split(',')[0]	
+		settings['schedule'] = cats[2].split(',')[0];	
 		setDefaults(settings);	
 		console.log(settings);
 		
@@ -97,14 +103,47 @@ $(document).ready(function() {
 		$('#phManual').val(parseFloat(d[0].PH_set_point));
 	});
 	
+	$('#scheduleSelect').change(function(e){
+		var s = settings['schedules'];
+		key = 0;
+		var schedName = $('#scheduleSelect').val(); 
+		if (schedName == 'None'){
+			$('#schedulePreview').html('');
+			$('#schedulePreviewLabel').html('');
+			return false;
+		}
+			
+		for (i in s) {
+			if (s[i] == schedName) {
+				key = i;
+				break;
+			}
+		}
+		
+		//load schedule preview
+		$.get('schedule/'+settings['scheduleNames'][key], function(d){
+			$('#schedulePreview').html(d);
+			$('#schedulePreviewLabel').html(schedName);
+		});
+	});
+	
 	$('#setSched').click(function(){
 		val = $('#scheduleSelect').val();
-		$.get('cgi-bin/params.py?type=setSched&name='+val,function(d){
+		//cgi-bin/params.py?type=setSched&name='+val
+		$.get('/?type=setSched&name='+val,function(d){
 			$('#setSchedule .notification').append('<div class="alert alert-success"><strong>New Schedule</strong> has successfully been started</div>');
 			var schedAlert = $(this);
-			$('.alert').fadeTo(2000,0,function(){
+			$('.alert').fadeTo(5000,0,function(){
 				$('.alert').remove();
 			});
+			
+			//set current text
+			$('#scheduleCurrent').html(val);
+			
+			//change class
+			$('.selected').removeClass('selected');
+			$('#scheduleSelect option:selected').addClass('.selected');
+			
 		});
 	});
 	
@@ -122,15 +161,17 @@ $(document).ready(function() {
 
 function setDefaults(settings) {
 	s = settings['schedules'];
+	$('#scheduleCurrent').html('None');
 	for (i in s) {
 		console.log(s[i] + ':' + settings['schedule']);
 		if (s[i] == settings['schedule']) {
-			selected = 'selected';
 			console.log('selected');
+			$('#scheduleSelect').append('<option class="selected" selected=selected val="'+s[i]+'">'+s[i]+'</option>');
+			$('#scheduleCurrent').html(val);
 		} else {
-			selected = '';
+			$('#scheduleSelect').append('<option val="'+s[i]+'">'+s[i]+'</option>');
 		}
-		$('#scheduleSelect').append('<option '+selected+' val="'+s[i]+'">'+s[i]+'</option>');
+		
 	}	
 }
 

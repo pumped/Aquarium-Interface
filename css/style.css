@@ -34,3 +34,16 @@ ul.schedule {
 .footer {
 	height:200px;
 }
+
+.selected {
+	font-weight:bold !important;
+	color:#44BE3F;
+}
+
+#schedulePreviewLabel {
+	margin-top:20px;
+}
+#schedulePreview {
+	max-height:200px;
+	overflow:auto;
+}

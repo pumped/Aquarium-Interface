@@ -54,9 +54,9 @@
 							</legend>
 							<div class="form-group">
 								<div class="notification"></div>
-								<label for="exampleInputFile">Select Schedule</label>
+								<label for="exampleInputFile">Select Schedule</label> (Current: <span id="scheduleCurrent"></span>)
 								<select class="form-control" id="scheduleSelect">
-									<option>None</option>
+									<option class="selected">None</option>
 								</select>
 							</div>
 							<button id="setSched" type="button" class="btn btn-success">
@@ -65,7 +65,9 @@
 							<button type="button" class="btn btn-danger" id="deleteSched">
 								Delete
 							</button>
-							
+							<br/>
+							<label id="schedulePreviewLabel" for="schedulePreview"></label>
+							<pre id="schedulePreview"></pre>
 						</fieldset>
 					</form>
 					<br/>
