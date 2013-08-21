@@ -138,12 +138,7 @@ $(document).ready(function() {
 			});
 			
 			//set current text
-			$('#scheduleCurrent').html(val);
-			
-			//change class
-			$('.selected').removeClass('selected');
-			$('#scheduleSelect option:selected').addClass('.selected');
-			
+			$('#scheduleCurrent').html(val);			
 		});
 	});
 	
@@ -167,7 +162,7 @@ function setDefaults(settings) {
 		if (s[i] == settings['schedule']) {
 			console.log('selected');
 			$('#scheduleSelect').append('<option class="selected" selected=selected val="'+s[i]+'">'+s[i]+'</option>');
-			$('#scheduleCurrent').html(val);
+			$('#scheduleCurrent').html(s[i]);
 		} else {
 			$('#scheduleSelect').append('<option val="'+s[i]+'">'+s[i]+'</option>');
 		}
