@@ -77,10 +77,10 @@ def setEmail(email, add=True):
         cfg.addEmail(email)
     else:
         cfg.deleteEmail(email)
+        
+    print "<meta http-equiv='refresh' content='0; url=/settings.html'>"
 
 
 cfg = Settings()
 listSchedules()
 cfg.save()
-
-print "<meta http-equiv='refresh' content='0; url=/settings.html'>"
