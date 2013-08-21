@@ -48,7 +48,7 @@ $(document).ready(function() {
 		var row = $(this).parent().parent();
 		
 		//post to server
-		$.get('cgi-bin/params.py?type=notification&delete',function(d){
+		$.get('cgi-bin/params.py?type=notification&inputEmail='+email+'&delete',function(d){
 			//delete
 			row.remove();
 		})
