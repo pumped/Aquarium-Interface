@@ -98,7 +98,7 @@ $(document).ready(function() {
 		});
 	});
 	
-	$('#deleteSched').click(function)(){
+	$('#deleteSched').click(function(){
 		console.log('nothing yet');
 	});
 });
