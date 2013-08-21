@@ -87,19 +87,36 @@ $(document).ready(function() {
 		}
 	});
 	
+	$.getJSON('data/current.json', function(d){
+		temp = d[0].PHPID;
+		$('#Ki').val(parseFloat(temp.Ki));
+		$('#Kp').val(parseFloat(temp.Kp));
+		$('#Kd').val(parseFloat(temp.Kd));
+		
+		$('#tempManual').val(parseFloat(d[0].Temperature.set_point));
+		$('#phManual').val(parseFloat(d[0].PH.set_point));
+	});
+	
 	$('#setSched').click(function(){
 		val = $('#scheduleSelect').val();
 		$.get('cgi-bin/params.py?type=setSched&name='+val,function(d){
-			console.log(d);
 			$('#setSchedule .notification').append('<div class="alert alert-success"><strong>New Schedule</strong> has successfully been started</div>');
+			var schedAlert = $(this);
 			$('.alert').fadeTo(2000,0,function(){
-				$this.remove();
+				$('.alert').remove();
 			});
 		});
 	});
 	
 	$('#deleteSched').click(function(){
-		console.log('nothing yet');
+		val = $('#scheduleSelect').val();
+		$.get('cgi-bin/params.py?type=deleteSched&name='+val,function(d){
+			$('#setSchedule .notification').append('<div class="alert alert-danger"><strong>Schedule</strong> '+val+' has been deleted</div>');
+			var schedAlert = $(this);
+			$('.alert').fadeTo(2000,0,function(){
+				$('.alert').remove();
+			});
+		});
 	});
 });
 
