@@ -56,7 +56,7 @@ $(document).ready(function() {
 	
 	
 	//get defaults  cgi-bin/params.py?type=settings
-	$.get('cgi-bin/params.py?type=settings',function(d){
+	$.get('cgi/test.txt',function(d){
 		console.log(d);
 		
 		cats = d.split('\n')
@@ -99,8 +99,8 @@ $(document).ready(function() {
 	});
 	
 	$('#deleteSched').click(function)(){
-		
-	}
+		console.log('nothing yet');
+	});
 });
 
 function setDefaults(settings) {
