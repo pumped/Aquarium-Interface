@@ -165,9 +165,11 @@ function setDefaults(settings) {
 			$('#scheduleCurrent').html(s[i]);
 		} else {
 			$('#scheduleSelect').append('<option val="'+s[i]+'">'+s[i]+'</option>');
-		}
-		
-	}	
+		}		
+	}
+	
+	//setup correctly
+	$('#scheduleSelect').change();
 }
 
 function post(sensor, type, value) {
