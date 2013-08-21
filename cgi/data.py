@@ -33,7 +33,7 @@ def dataRange(start, end):
 	
 	if range <= 13: #use 10s data
 		dataSet = getHourData(s, e)
-	elif range <= 48: #use 10m data
+	elif range <= 192: #use 10m data
 		dataSet = getDayData(s, e)
 	else:   #use 1hr data
 		dataSet = getAll()
