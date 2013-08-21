@@ -31,7 +31,7 @@ def dataRange(start, end):
 	diff = e - s
 	range = diff.total_seconds() / 60 / 60
 	
-	if range <= 5: #use 10s data
+	if range <= 13: #use 10s data
 		dataSet = getHourData(s, e)
 	elif range <= 48: #use 10m data
 		dataSet = getDayData(s, e)
