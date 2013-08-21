@@ -110,6 +110,7 @@ $(document).ready(function() {
 		if (schedName == 'None'){
 			$('#schedulePreview').html('');
 			$('#schedulePreviewLabel').html('');
+			$('#scheduleP').hide();
 			return false;
 		}
 			
@@ -122,6 +123,7 @@ $(document).ready(function() {
 		
 		//load schedule preview
 		$.get('schedule/'+settings['scheduleNames'][key], function(d){
+			$('#scheduleP').show();
 			$('#schedulePreview').html(d);
 			$('#schedulePreviewLabel').html(schedName);
 		});
