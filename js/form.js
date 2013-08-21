@@ -43,14 +43,14 @@ $(document).ready(function() {
 	
 	//email delete buttons
 	$('#emailNotifications').on('click','.emailDelete', function(){
-		var email = $(this).parent().parent().find('.address').html()
-		
+		var email = $(this).parent().parent().find('.address').html()		
 		$(this).parent().parent().fadeTo('slow',0.3);
+		var row = $(this).parent().parent();
 		
 		//post to server
-		$.get('cgi-bin/params.py?type="notification&delete"',function(d){
+		$.get('cgi-bin/params.py?type=notification&delete',function(d){
 			//delete
-			$(this).parent().parent().remove();
+			row.remove();
 		})
 	});
 	
