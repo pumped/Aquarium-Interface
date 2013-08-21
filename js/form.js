@@ -38,12 +38,24 @@ $(document).ready(function() {
 	//Schedule
 	//Schedule delete buttons
 	$('#scheduleTable').on('click', '.schedDelete', function(){
-		console.log($(this));
 		$(this).parent().parent().remove();
 	});
 	
+	//email delete buttons
+	$('#emailNotifications').on('click','.emailDelete', function(){
+		var email = $(this).parent().parent().find('.address').html()
+		
+		$(this).parent().parent().fadeTo('slow',0.3);
+		
+		//post to server
+		$.get('cgi-bin/params.py?type="notification&delete"',function(d){
+			//delete
+			$(this).parent().parent().remove();
+		})
+	});
 	
-	//get defaults
+	
+	//get defaults  cgi-bin/params.py?type=settings
 	$.get('cgi-bin/params.py?type=settings',function(d){
 		console.log(d);
 		
@@ -71,7 +83,7 @@ $(document).ready(function() {
 		
 		//emails
 		for (i in settings['emails']) {
-			$('#emailNotifications').append('<li>'+settings['emails'][i]+'</li>');
+			$('#emailNotifications tbody').append('<tr><td class="address">'+settings['emails'][i]+'</td><td><a class="glyphicon glyphicon-remove emailDelete"></a></td>');
 		}
 	});
 	
@@ -79,8 +91,16 @@ $(document).ready(function() {
 		val = $('#scheduleSelect').val();
 		$.get('cgi-bin/params.py?type=setSched&name='+val,function(d){
 			console.log(d);
+			$('#setSchedule .notification').append('<div class="alert alert-success"><strong>New Schedule</strong> has successfully been started</div>');
+			$('.alert').fadeTo(2000,0,function(){
+				$this.remove();
+			});
 		});
 	});
+	
+	$('#deleteSched').click(function)(){
+		
+	}
 });
 
 function setDefaults(settings) {

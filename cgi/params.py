@@ -28,7 +28,10 @@ def listSchedules():
     type = formDict['type']
     
     if (type == 'notification'):
-        setEmail(formDict['inputEmail'], True);
+        delete = False
+        if ('delete' in formDict):
+            delete = True
+        setEmail(formDict['inputEmail'], delete);
     elif (type == 'turningp'):
         pass
     elif (type == 'schedule'):

@@ -47,12 +47,13 @@
 			</div>
 			<div class="row">
 				<div class="col-lg-6">
-					<form>
+					<form id="setSchedule">
 						<fieldset>
 							<legend>
 								Schedule
 							</legend>
 							<div class="form-group">
+								<div class="notification"></div>
 								<label for="exampleInputFile">Select Schedule</label>
 								<select class="form-control" id="scheduleSelect">
 									<option>None</option>
@@ -212,9 +213,16 @@
 								Notifications
 							</legend>
 							<label for="emailNotifications">Current Subscribers</label>
-							<ul id="emailNotifications">
-								
-							</ul>
+							<table class="table" id="emailNotifications">
+								<thead>
+									<tr>
+										<th>Email</th>
+										<th>&nbsp;</th>
+									</tr>
+								</thead>
+								<tbody>s
+								</tbody>
+							</table>
 							<div class="form-group">
 								<label for="inputEmail">Email address</label>
 								<input type="text" class="form-control" id="inputEmail" name="inputEmail" placeholder="Email Address">
