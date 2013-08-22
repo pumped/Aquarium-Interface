@@ -4,6 +4,19 @@ $(document).ready(function() {
 	//setup time selector
 	$('input[name="time"]').ptTimeSelect();
 	
+	//data buttons
+	$('#deleteData').click(function(){
+		del = confirm("Are you sure you want to delete all data collected on this device?");
+		if (del){
+			last = confirm("I accept that I am authorised to delete data and understand that recovery is not possible.");
+			if (last){
+				console.log('Data Deleted...');
+				$('#dataNotifications').append('<div class="alert alert-danger"><strong>Data Deletion</strong> in progress</div>');
+				setTimeout(function(){$('.alert').fadeTo(1000,0,function(){$(this).remove();});},5000);
+			}
+		}
+	});
+	
 	//setup submit buttons
 	
 	//manual pH
