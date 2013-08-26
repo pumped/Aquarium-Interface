@@ -11,6 +11,7 @@ var colors = ['#294EA3', '#536EAD', '#DE6A6A', '#C21919'];
 var d = [];
 var extremities = [];
 var latestPoint = [];
+var updateRate = 10000;
 
 function setExtreme(val,v) {
 	val = parseInt(val);
@@ -58,7 +59,7 @@ function loadLiveData() {
 		historyChart.series[2].addPoint(d[3][0],true);		
 		updateLock--;
 		
-		setTimeout(loadLiveData, 10000);
+		setTimeout(loadLiveData, updateRate);
 	});
 }
 
