@@ -1,4 +1,4 @@
-values = [3.2,6.4,''];
+values = [4,7,''];
 nextLock = 0;
 stage = 1;
 var stages = ['Low','Neutral','High'];
@@ -41,10 +41,6 @@ $(document).ready(function(){
 		} else if (stage == 3) {
 			setPhCalibration();
 		}
-		
-		stage++;
-		$('#solutionValue').html(stage);
-		$('#phCalibrateValue').val(values[stage-1]);
 	});
 });
 
@@ -54,30 +50,43 @@ function setPhCalibration() {
 	value = $('#phCalibrateValue').val();
 	
 	//finish calibration if not using 3rd point
-	if (value == '' && stage == 3) {
+	if (value == '' && stage == 2) {
 		finishCalibration();
 		return;
 	}
 	
 	//set data
+	///aquarium/ph/calibration/"
 	$.ajax({
 		type : "POST",
-		url : "/aquarium/ph/calibration/" + stages[stage-1],
+		url : "aquarium/ph/calibration/" + stages[stage-1],
 		data : value,
 		contentType : "application/json; charset=utf-8",
 		dataType : "text",
 		success : function(data) {
 			nextLock = 0;
-			console.log('loaded');
-			requestInput();
-			
-			console.log(stage)
-			if (stage == 4) {
-				finishCalibration();
+			if (data == 'OK') {
+				stage++;
+				console.log('loaded');
+				requestInput();
+				
+				console.log(stage)
+				if (stage == 4) {
+					finishCalibration();
+				}
+				
+				$('#solutionValue').html(stage);
+				$('#phCalibrateValue').val(values[stage-1]);
+			} else {
+				alert('Error during calibration process, please try again.');
+				console.log(data);
+				requestInput();
 			}
 		},
-		failure : function(errMsg) {
-			alert('error calibrating');
+		error : function(errMsg) {
+			alert('Error communicating with server during calibration, please try again');
+			nextLock = 0;
+			requestInput();
 		}
 	});
 	setTimeout(function(data) {
