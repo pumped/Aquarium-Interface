@@ -50,7 +50,8 @@ function setPhCalibration() {
 	value = $('#phCalibrateValue').val();
 	
 	//finish calibration if not using 3rd point
-	if (value == '' && stage == 2) {
+	console.log("Stage: " + stage);
+	if (value == '' && stage == 3) {
 		finishCalibration();
 		return;
 	}
