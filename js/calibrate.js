@@ -1,6 +1,7 @@
 values = [3.2,6.4,''];
 nextLock = 0;
 stage = 1;
+var stages = ['Low','Neutral','High'];
  
 
 $(document).ready(function(){
@@ -61,7 +62,7 @@ function setPhCalibration() {
 	//set data
 	$.ajax({
 		type : "POST",
-		url : "/aquarium/calibrate/set/" + stage,
+		url : "/aquarium/ph/calibration/" + stages[stage-1],
 		data : value,
 		contentType : "application/json; charset=utf-8",
 		dataType : "text",
