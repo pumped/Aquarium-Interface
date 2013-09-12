@@ -66,7 +66,7 @@ function setPhCalibration() {
 		dataType : "text",
 		success : function(data) {
 			nextLock = 0;
-			if (data == 'OK') {
+			if (data.startsWith('OK')) {
 				stage++;
 				console.log('loaded');
 				requestInput();
@@ -110,4 +110,10 @@ function requestInput() {
 
 
 
-
+//starts with function
+if (typeof String.prototype.startsWith != 'function') {
+  // see below for better implementation!
+  String.prototype.startsWith = function (str){
+    return this.indexOf(str) == 0;
+  };
+}
