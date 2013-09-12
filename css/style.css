@@ -50,3 +50,8 @@ ul.schedule {
 	margin:auto;
 	text-align:center;
 }
+
+.loadImage .progress {
+	width:300px;
+	margin:auto;
+}
